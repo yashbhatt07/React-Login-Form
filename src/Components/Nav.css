@@ -1,0 +1,9 @@
+.nav {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+}
+.li {
+  margin: 10px;
+}
