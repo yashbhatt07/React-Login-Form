@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Components/Login.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  useEffect(() => {
+    localStorage.removeItem("login");
+  }, []);
   const navigate = useNavigate();
   // const [name, setName] = useState({
   //   value: "",
@@ -34,10 +37,10 @@ export default function Login() {
 
   const validation = (value, identifier) => {
     if (identifier == "name" && value.length > 0 && value.length < 5) {
-      setLoginForm((value) => ({
-        ...value,
+      setLoginForm((name) => ({
+        ...name,
         name: {
-          ...value.name,
+          ...name.name,
           error: "name must be at least 5 characters long",
         },
       }));
@@ -76,7 +79,7 @@ export default function Login() {
       setLoginForm((value) => ({
         ...value,
         name: {
-          name,
+          ...value.value,
           error: "name must be at least 5 characters long",
         },
       }));
@@ -86,33 +89,35 @@ export default function Login() {
     if (loginForm.email.value.trim() === "") {
       setLoginForm((email) => ({
         ...email,
-        email: { email, error: "Email is required" },
+        email: { ...email.email, error: "Email is required" },
       }));
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(loginForm.email.value)) {
       setLoginForm((email) => ({
         ...email,
-        email: { email, error: "Invalid email" },
+        email: { ...email.email, error: "Invalid email" },
       }));
       isValid = false;
     }
     if (loginForm.password.value.trim() === "") {
       setLoginForm((password) => ({
         ...password,
-        password: { password, error: "Password is required" },
+        password: { ...password.password, error: "Password is required" },
       }));
       isValid = false;
     } else if (loginForm.password.value.length < 8) {
       setLoginForm((password) => ({
         ...password,
         password: {
-          password,
+          ...password.password,
           error: "Password must be at least 8 characters long",
         },
       }));
       isValid = false;
     }
+
     if (isValid) {
+      localStorage.setItem("login", true);
       navigate("/Dashboard");
     }
   };

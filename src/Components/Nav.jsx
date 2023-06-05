@@ -7,15 +7,7 @@ export default function Nav() {
       <ul className="nav">
         <li className="li">
           <Link style={{ color: "white" }} to="/">
-            Home
-          </Link>
-        </li>
-        <li className="li">
-          <Link
-            style={{ color: "white", pointerEvents: "none" }}
-            to="/Dashboard"
-          >
-            Dashboard
+            Login
           </Link>
         </li>
       </ul>
