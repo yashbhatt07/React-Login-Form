@@ -10,8 +10,6 @@ th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-  display: flex;
-  flex-direction: column;
 }
 
 .button {
@@ -26,4 +24,13 @@ tr:hover {
 }
 .button:hover {
   background-color: rgb(173 216 230 / 70%);
+}
+.btn-add {
+  display: flex;
+  margin: 10px 0 0 auto;
+  margin-right: 20px;
+}
+.input {
+  padding-right: 255px;
+  margin-bottom: 6px;
 }

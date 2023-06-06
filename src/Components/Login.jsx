@@ -9,10 +9,14 @@ export default function Login() {
   const navigate = useNavigate();
 
   const [loginForm, setLoginForm] = useState({
-    name: { value: "", error: "" },
     email: { value: "", error: "" },
     password: { value: "", error: "" },
+    message: { error: "" },
   });
+
+  const email = "admin@gmail.com";
+  const password = "admin@123";
+
   const changeHandler = (value, identifier) => {
     setLoginForm((loginForm) => {
       return {
@@ -24,15 +28,6 @@ export default function Login() {
   };
 
   const validation = (value, identifier) => {
-    if (identifier == "name" && value.length > 0 && value.length < 5) {
-      setLoginForm((name) => ({
-        ...name,
-        name: {
-          ...name.name,
-          error: "name must be at least 5 characters long",
-        },
-      }));
-    }
     if (
       identifier == "email" &&
       value.length > 0 &&
@@ -57,22 +52,6 @@ export default function Login() {
   const submit = (event) => {
     event.preventDefault();
     let isValid = true;
-    if (loginForm.name.value.trim() === "") {
-      setLoginForm((value) => ({
-        ...value,
-        name: { ...value.name, error: "Name is required" },
-      }));
-      isValid = false;
-    } else if (loginForm.name.value.length < 5) {
-      setLoginForm((value) => ({
-        ...value,
-        name: {
-          ...value.value,
-          error: "name must be at least 5 characters long",
-        },
-      }));
-      isValid = false;
-    }
 
     if (loginForm.email.value.trim() === "") {
       setLoginForm((email) => ({
@@ -104,11 +83,30 @@ export default function Login() {
       isValid = false;
     }
 
-    if (isValid) {
+    if (
+      isValid &&
+      loginForm.email.value === email &&
+      loginForm.password.value === password
+    ) {
       localStorage.setItem("login", true);
-      navigate("/Dashboard");
+      navigate("/dashboard");
+    }
+    if (
+      loginForm.email.value.length > 0 &&
+      loginForm.password.value.length > 0
+    ) {
+      if (
+        loginForm.email.value != email &&
+        loginForm.password.value != password
+      ) {
+        setLoginForm({
+          ...loginForm,
+          message: { error: "Wrong Credential" },
+        });
+      }
     }
   };
+  console.log(loginForm);
   return (
     <div className="form">
       <h3>Login</h3>
@@ -116,22 +114,11 @@ export default function Login() {
         <div className="fields">
           <input
             type="text"
-            name="name"
-            value={loginForm.name.value}
-            onChange={(e) => changeHandler(e.target.value, "name")}
-            placeholder="Name"
-          />
-          <p>
-            <span className="e-m">{loginForm.name.error}</span>{" "}
-          </p>
-        </div>
-        <div className="fields">
-          <input
-            type="text"
             name="email"
             value={loginForm.email.value}
             onChange={(e) => changeHandler(e.target.value, "email")}
             placeholder="email"
+            autoComplete="off"
           />
           <br />
           <span className="e-m">{loginForm.email.error}</span>
@@ -143,14 +130,16 @@ export default function Login() {
             value={loginForm.password.value}
             onChange={(e) => changeHandler(e.target.value, "password")}
             placeholder="password"
+            autoComplete="off"
           />
           <br />
           <span className="e-m">{loginForm.password.error}</span>{" "}
         </div>
-
-        <button className="btn" type="submit">
+        <button className="btn-primary btn" type="submit">
           LogIn
         </button>
+        <br />
+        <span className="e-m"> {loginForm.message.error}</span>
       </form>
     </div>
   );

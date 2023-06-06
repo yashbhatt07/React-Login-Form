@@ -3,7 +3,9 @@
   display: flex;
   flex-direction: row;
   height: 40px;
+  width: 100%;
 }
 .li {
   margin: 10px;
+  margin-left: auto;
 }

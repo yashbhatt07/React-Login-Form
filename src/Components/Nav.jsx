@@ -7,7 +7,7 @@ export default function Nav() {
       <ul className="nav">
         <li className="li">
           <Link style={{ color: "white" }} to="/">
-            Login
+            Logout
           </Link>
         </li>
       </ul>

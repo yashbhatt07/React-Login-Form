@@ -19,9 +19,9 @@ export default function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Protected Component={Login} />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route
-          path="/Dashboard"
+          path="/dashboard"
           element={<Protected Component={Dashboard} />}
         />
         <Route path="*" element={<Protected Component={Login} />} />
