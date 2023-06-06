@@ -7,18 +7,6 @@ export default function Login() {
     localStorage.removeItem("login");
   }, []);
   const navigate = useNavigate();
-  // const [name, setName] = useState({
-  //   value: "",
-  //   error: "",
-  // });
-  // const [email, setEmail] = useState({
-  //   value: "",
-  //   error: "",
-  // });
-  // const [password, setPassword] = useState({
-  //   value: "",
-  //   error: "",
-  // });
 
   const [loginForm, setLoginForm] = useState({
     name: { value: "", error: "" },
