@@ -10,10 +10,10 @@ import ReactPaginate from "react-paginate";
 const formDefaultValues = {
   mode: "add",
   index: null,
-  firstName: { value: "dfffdf", error: "" },
-  lastName: { value: "fdfdfdfdf", error: "" },
-  userName: { value: "dfdfd@ksd.com", error: "" },
-  email: { value: "fdfd@ksd.com", error: "" },
+  firstName: { value: "", error: "" },
+  lastName: { value: "", error: "" },
+  userName: { value: "", error: "" },
+  email: { value: "", error: "" },
   status: { value: "", error: "" },
 };
 
@@ -23,9 +23,9 @@ export default function Dashboard() {
   const [showMessaga, setShowMessage] = useState(false);
   const [inputList, setInputList] = useState(formDefaultValues);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 2;
+  const itemsPerPage = 7;
   const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, list.length);
   const records = list.slice(startIndex, endIndex);
   const nPage = Math.ceil(list.length / itemsPerPage);
 
@@ -204,16 +204,18 @@ export default function Dashboard() {
       if (indentifier === "add") {
         setList((prevList) => [...prevList, inputList]);
       } else {
-        const clonedList = records;
-        clonedList[inputList.index] = {
-          firstName: inputList.firstName,
-          lastName: inputList.lastName,
-          email: inputList.email,
-          userName: inputList.userName,
-          status: inputList.status,
-        };
-
-        setList(clonedList);
+        setList(() => {
+          const clonedList = [...list];
+          const itemIndex = startIndex + inputList.index;
+          clonedList[itemIndex] = {
+            firstName: inputList.firstName,
+            lastName: inputList.lastName,
+            email: inputList.email,
+            userName: inputList.userName,
+            status: inputList.status,
+          };
+          return clonedList;
+        });
       }
       handleClose();
     }
