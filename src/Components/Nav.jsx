@@ -22,7 +22,7 @@ export default function Nav() {
             <MayNav className="me-auto">
               <MayNav.Link href="/dashboard">Dashboard</MayNav.Link>
               <MayNav.Link href="/users">Users</MayNav.Link>
-              <MayNav.Link href="/login" className="text-sm-left ">
+              <MayNav.Link href="/login" className="text-sm-left l-g ">
                 Logout
               </MayNav.Link>
             </MayNav>
