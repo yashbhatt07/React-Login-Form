@@ -3,6 +3,8 @@ import Login from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
 import Protected from "./Components/Protected";
 import { Routes, Route } from "react-router-dom";
+import { ErroMessage } from "./Components/ErrorMessage";
+import Users from "./Components/Users";
 // import { useEffect } from "react";
 
 export default function App() {
@@ -24,7 +26,8 @@ export default function App() {
           path="/dashboard"
           element={<Protected Component={Dashboard} />}
         />
-        <Route path="*" element={<Protected Component={Login} />} />
+        <Route path="/users" element={<Protected Component={Users} />} />
+        <Route path="*" element={<Protected Component={ErroMessage} />} />
       </Routes>
     </div>
   );
