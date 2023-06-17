@@ -112,8 +112,6 @@ function AddItems({
                 ) : (
                   ""
                 )}
-                {/* <option value="Active">Active</option> */}
-                {/* <option value="In-Active"> In-active</option> */}
               </Form.Select>
               <br />
               <span className="e-m">{inputList.status.error}</span>
