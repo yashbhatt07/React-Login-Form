@@ -5,18 +5,8 @@ import Protected from "./Components/Protected";
 import { Routes, Route } from "react-router-dom";
 import { ErroMessage } from "./Components/ErrorMessage";
 import Users from "./Components/Users";
-// import { useEffect } from "react";
 
 export default function App() {
-  // const navigate = useNavigate();
-  // // const [isOpen, setIsOpen] = useState(false);
-  // const WildcardRoute = () => {
-  //   // redirect("/Login");
-  //   useEffect(() => {
-  //     return navigate("/Login");
-  //   }, []);
-  // };
-
   return (
     <div className="App">
       <Routes>

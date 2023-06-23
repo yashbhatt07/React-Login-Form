@@ -1,29 +1,30 @@
 import ReactPaginate from "react-paginate";
-import React from 'react'
+import PropTypes from "prop-types";
 
-function Pagination({changeCpage,nPage}) {
-    return (
-        <div>
-              
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={changeCpage}
-          pageCount={nPage}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          containerClassName="paginationBttns"
-          previousClassName="previousBttns"
-          nextLinkClassName="nextBttns"
-          disabledClassName="paginationDisabled"
-          activeClassName="paginationActive"
-        />
-        </div>
-    )
+// import React from 'react'
+
+function Pagination({ changeCpage, nPage }) {
+  return (
+    <div>
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={changeCpage}
+        pageCount={nPage}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+        containerClassName="paginationBttns"
+        previousClassName="previousBttns"
+        nextLinkClassName="nextBttns"
+        disabledClassName="paginationDisabled"
+        activeClassName="paginationActive"
+      />
+    </div>
+  );
 }
+Pagination.propTypes = {
+  changeCpage: PropTypes.func.isRequired,
+  nPage: PropTypes.number.isRequired,
+};
 
-export default Pagination
-
-
-
-  
+export default Pagination;

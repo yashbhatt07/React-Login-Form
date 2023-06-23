@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import "../Components/Login.css";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -6,22 +6,22 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Login() {
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email").required("required"),
     password: yup
       .string()
-      .required('required')
-      .min(8,'Password must be at least 8 characters')
-      .max(12,'Password must be less then 12 characters')
-      
+      .required("required")
+      .min(8, "Password must be at least 8 characters")
+      .max(12, "Password must be less then 12 characters"),
   });
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema)
+    mode: "onChange",
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
@@ -69,81 +69,78 @@ export default function Login() {
   const validEmail = "admin@gmail.com";
   const validPassword = "admin@123";
 
-  const submit =  (data) => {
+  const submit = (data, event) => {
     event.preventDefault();
 
- 
-     schema.validate(data)
+    schema.validate(data);
     const { email, password } = data;
 
- 
     if (email === validEmail && password === validPassword) {
       localStorage.setItem("login", true);
       navigate("/dashboard");
     } else {
       // setLoginForm({ ...loginForm, message: { error: "Wrong Credentials" } });
-      setError("Invalid Credential")
+      setError("Invalid Credential");
     }
-    
   };
 
-    // let isValid = true;
+  // let isValid = true;
 
-    // if (loginForm.email.value.trim() === "") {
-    //   setLoginForm(email => ({
-    //     ...email,
-    //     email: { ...email.email, error: "Email is required" }
-    //   }));
-    //   isValid = false;
-    // } else if (!/\S+@\S+\.\S+/.test(loginForm.email.value)) {
-    //   setLoginForm(email => ({
-    //     ...email,
-    //     email: { ...email.email, error: "Invalid email" }
-    //   }));
-    //   isValid = false;
-    // }
-    // if (loginForm.password.value.trim() === "") {
-    //   setLoginForm(password => ({
-    //     ...password,
-    //     password: { ...password.password, error: "Password is required" }
-    //   }));
-    //   isValid = false;
-    // } else if (loginForm.password.value.length < 8) {
-    //   setLoginForm(password => ({
-    //     ...password,
-    //     password: {
-    //       ...password.password,
-    //       error: "Password must be at least 8 characters long"
-    //     }
-    //   }));
-    //   isValid = false;
-    // }
+  // if (loginForm.email.value.trim() === "") {
+  //   setLoginForm(email => ({
+  //     ...email,
+  //     email: { ...email.email, error: "Email is required" }
+  //   }));
+  //   isValid = false;
+  // } else if (!/\S+@\S+\.\S+/.test(loginForm.email.value)) {
+  //   setLoginForm(email => ({
+  //     ...email,
+  //     email: { ...email.email, error: "Invalid email" }
+  //   }));
+  //   isValid = false;
+  // }
+  // if (loginForm.password.value.trim() === "") {
+  //   setLoginForm(password => ({
+  //     ...password,
+  //     password: { ...password.password, error: "Password is required" }
+  //   }));
+  //   isValid = false;
+  // } else if (loginForm.password.value.length < 8) {
+  //   setLoginForm(password => ({
+  //     ...password,
+  //     password: {
+  //       ...password.password,
+  //       error: "Password must be at least 8 characters long"
+  //     }
+  //   }));
+  //   isValid = false;
+  // }
 
-    // localStorage.setItem("login", true);
-    // navigate("/dashboard");
+  // localStorage.setItem("login", true);
+  // navigate("/dashboard");
 
-    // if (
-    //   isValid &&
-    //   loginForm.email.value === email &&
-    //   loginForm.password.value === password
-    // ) {
-    //   localStorage.setItem("login", true);
-    //   navigate("/dashboard");
-    // }
-    // if (
-    //   loginForm.email.value.length > 0 &&
-    //   loginForm.password.value.length > 0
-    // ) {
-    //   if (
-    //     loginForm.email.value != email &&
-    //     loginForm.password.value != password
-    //   ) {
-    //     setLoginForm({
-    //       ...loginForm,
-    //       message: { error: "Wrong Credential" }
-    //     });
-    //   }
-    // }
+  // if (
+  //   isValid &&
+  //   loginForm.email.value === email &&
+  //   loginForm.password.value === password
+  // ) {
+  //   localStorage.setItem("login", true);
+  //   navigate("/dashboard");
+  // }
+  // if (
+  //   loginForm.email.value.length > 0 &&
+  //   loginForm.password.value.length > 0
+  // ) {
+  //   if (
+  //     loginForm.email.value != email &&
+  //     loginForm.password.value != password
+  //   ) {
+  //     setLoginForm({
+  //       ...loginForm,
+  //       message: { error: "Wrong Credential" }
+  //     });
+  //   }
+  // }
   // console.log(loginForm);
   return (
     <div className="form">
