@@ -1,13 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import _ from "lodash";
 import Nav from "./Nav";
-// import SelectItems from "./SelectItems";
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import DummyProfile from "../Components/DummyProfile.webp";
 import { Modal, Form, Table, Button } from "react-bootstrap";
 import AddItems from "../Components/AddItems";
-import AddImage from "./AddImage";
+// import AddImage from "./AddImage";
 import Pagination from "./Pagination";
 import Blue from "../Components/blue.png";
 import Green from "../Components/green.png";
@@ -20,20 +17,20 @@ export default function Users() {
       email: "d@gamil.com",
       userName: "yyyyty",
       status: {
-        value: "Active",
-        label: "Active",
+        value: "In-Active",
+        label: "In-Active",
       },
     },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "In-Active",
+        label: "In-Active",
+      },
+    },
     // {
     //   firstName: "qwqwqwqw",
     //   lastName: "wdwdwdw",
@@ -177,7 +174,7 @@ export default function Users() {
   ]);
   const [show, setShow] = useState(false);
   const [showMessaga, setShowMessage] = useState(false);
-  const [showDropMessage, setShowDropMessage] = useState(false);
+  // const [showDropMessage, setShowDropMessage] = useState(false);
   const [inputList, setInputList] = useState({ mode: "add", index: null });
   console.log(list);
   const [currentPage, setCurrentPage] = useState(0);
@@ -190,57 +187,8 @@ export default function Users() {
   const [sortOrderF, setSortOrderF] = useState("asc");
   const [sortOrderL, setSortOrderL] = useState("asc");
   const [selectedImage, setSelectedImage] = useState(null);
-  // const [drop, setDrop] = useState(false);
-  const [clickedObject, setClickObject] = useState({});
-
-  const schema = yup.object().shape({
-    firstName: yup
-      .string()
-      .required("FirstName is required")
-      .matches(
-        /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
-        "Name can only contain Latin letters."
-      )
-      .min(3, "firstName must be at least 4 characters")
-      .max(10, "firstName must be less then 10 characters"),
-
-    lastName: yup
-      .string()
-      .required("LastName is required")
-      .matches(
-        /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
-        "Name can only contain Latin letters."
-      )
-      .min(3, "lastName must be at least 4 characters")
-      .max(10, "lastName must be less then 10 characters"),
-
-    email: yup.string().email("Invalid email").required("Email is required"),
-    userName: yup
-      .string()
-      .required("userName is required")
-      .min(3, "userName must be at least 4 characters")
-      .max(10, "userName must be less then 10 characters"),
-    status: yup
-      .object()
-      .shape({
-        label: yup.string().required("status is required (from label)"),
-        value: yup.string().required("status is required"),
-      })
-      .nullable() // for handling null value when clearing options via clicking "x"
-      .required("status is required (from outter null check)"),
-  });
-
-  const {
-    register,
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
-  console.log("🚀 ~ file: AddItems.jsx:47 ~ AddItems ~ errors:", errors);
+  const [clicked, setClicked] = useState(false);
+  const [file, setFile] = useState();
   const defaultOptions = [
     { value: "Active", label: "Active" },
     { value: "In-Active", label: "In-Active" },
@@ -267,31 +215,12 @@ export default function Users() {
     setList([...list]);
   }, [list, sortOrderL]);
 
-  const onStatus = () => {
-    // console.log("clickedObject", clickedObject);
-    const { index, status } = clickedObject;
-
-    const setValue = status === "Active" ? "In-Active" : "Active";
-    // console.log("setValue", setValue);
-    // return;
-    const temp = [...list];
-    temp[index].status = { value: setValue, label: setValue };
-    setList([...temp]);
-    closeModal();
-  };
-
-  const openModal = (index, status) => {
-    console.log(index, status);
-    // return;
-    const myObj = {
-      index: index,
-      status: status.value,
-    };
-    setClickObject(myObj);
-    setShowDropMessage(true);
-  };
-  const closeModal = () => {
-    setShowDropMessage(false);
+  const onStatus = (index) => {
+    const updatedList = [...list];
+    const currentStatus = updatedList[index].status.value;
+    const newStatus = currentStatus === "Active" ? "In-Active" : "Active";
+    updatedList[index].status = { value: newStatus, label: newStatus };
+    setList(updatedList);
   };
 
   useEffect(() => {
@@ -341,7 +270,6 @@ export default function Users() {
 
   const onSubmit = (data) => {
     const newList = _.cloneDeep(list);
-
     if (inputList.mode === "add") {
       newList.push(data);
     } else {
@@ -351,6 +279,8 @@ export default function Users() {
     setList(() => {
       return newList;
     });
+
+    setClicked(true);
     handleClose();
   };
 
@@ -399,13 +329,27 @@ export default function Users() {
                   {records.length > 0}
                   <td>{index + startIndex + 1}</td>
                   <td>
-                    <img src={selectedImage} width={15} />
+                    <span>
+                      {clicked ? (
+                        <img src={selectedImage} width={45} />
+                      ) : (
+                        <img src={DummyProfile} width={45} />
+                      )}
+                    </span>
                   </td>
                   <td>{data.firstName}</td>
                   <td>{data.lastName}</td>
                   <td>{data.email}</td>
                   <td>{data.userName}</td>
-                  <td onClick={() => openModal(index, data.status)}>
+                  <td>
+                    <input
+                      className={`radio__toggle ${
+                        data.status === "In-Active" ? "inactive" : "active"
+                      }`}
+                      id="radio__toggle1"
+                      type="checkbox"
+                      onClick={() => onStatus(index)}
+                    />
                     {data.status.value}
                   </td>
                   <td>
@@ -422,7 +366,6 @@ export default function Users() {
                       >
                         Delete
                       </button>
-                      <AddImage setSelectedImage={setSelectedImage} />
                     </div>
                   </td>
 
@@ -456,7 +399,7 @@ export default function Users() {
               </th>
             </tr>
           )}
-          <Modal show={showDropMessage} onHide={closeModal}>
+          {/* <Modal show={showDropMessage} onHide={closeModal}>
             <Modal.Header>
               <Modal.Title>Change Status</Modal.Title>
             </Modal.Header>
@@ -472,7 +415,7 @@ export default function Users() {
                 Update
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </tbody>
       </Table>
       <Pagination changeCpage={changeCpage} nPage={nPage} />
@@ -483,12 +426,11 @@ export default function Users() {
           handleClose={handleClose}
           onSubmit={onSubmit}
           data={inputList.mode === "edit" ? records[inputList.index] : null}
-          register={register}
-          control={control}
-          handleSubmit={handleSubmit}
-          setValue={setValue}
           defaultOptions={defaultOptions}
-          errors={errors}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          setFiles={setFile}
+          clicked={clicked}
         />
       )}
     </>

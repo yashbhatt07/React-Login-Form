@@ -1,4 +1,4 @@
-/* div span {
+.n-items {
   width: max-content;
   margin: 0 auto;
   border: solid 2px blue;
@@ -7,8 +7,8 @@
   padding: 100px;
   font-size: 70px;
 }
-div h6 {
+.h-2 {
   margin: 0 auto;
   width: max-content;
   color: blue;
-} */
+}

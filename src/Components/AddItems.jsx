@@ -1,53 +1,82 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
-// import * as yup from "yup";
+import AddImage from "./AddImage";
+
+import * as yup from "yup";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import SelectItems from "./SelectItems";
 
 function AddItems({
   inputList,
   show,
-  handleClose,
   onSubmit,
   data,
-  handleSubmit,
-  register,
-  setValue,
-  errors,
-  control,
   defaultOptions,
+  handleClose,
+  selectedImage,
+  setSelectedImage,
+  clicked,
+  onClicked,
 }) {
-  // const {
-  //   register,
-  //   control,
-  //   watch,
-  //   handleSubmit,
-  //   setValue,
-  //   // watch
-  //   formState: { errors },
-  // } = useForm({
-  //   resolver: yupResolver(schema),
-  //   mode: "onChange",
-  // });
-  // console.log("🚀 ~ file: AddItems.jsx:47 ~ AddItems ~ errors:", errors);
-  // watch();
-  // const defaultOptions = [
-  //   { value: "Active", label: "Active" },
-  //   { value: "In-Active", label: "In-Active" },
-  // ];
+  const schema = yup.object().shape({
+    firstName: yup
+      .string()
+      .required("FirstName is required")
+      .matches(
+        /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
+        "Name can only contain Latin letters."
+      )
+      .min(3, "firstName must be at least 4 characters")
+      .max(10, "firstName must be less then 10 characters"),
 
+    lastName: yup
+      .string()
+      .required("LastName is required")
+      .matches(
+        /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,
+        "Name can only contain Latin letters."
+      )
+      .min(3, "lastName must be at least 4 characters")
+      .max(10, "lastName must be less then 10 characters"),
+
+    email: yup.string().email("Invalid email").required("Email is required"),
+    userName: yup
+      .string()
+      .required("userName is required")
+      .min(3, "userName must be at least 4 characters")
+      .max(10, "userName must be less then 10 characters"),
+    status: yup
+      .object()
+      .shape({
+        label: yup.string().required("status is required (from label)"),
+        value: yup.string().required("status is required"),
+      })
+      .nullable()
+      .required("status is required (from outter null check)"),
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
   useEffect(() => {
-    if (inputList.mode !== "edit" && data) {
+    if (inputList.mode === "edit" && data) {
       setValue("firstName", data.firstName);
       setValue("lastName", data.lastName);
       setValue("email", data.email);
       setValue("userName", data.userName);
       setValue("status", data.status);
     }
-  }, [data]);
+  }, [data, inputList.mode, setValue]);
 
   return (
     <div>
@@ -57,6 +86,13 @@ function AddItems({
         </Modal.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body className="form-modal">
+            <div style={{ marginBottom: "15px" }}>
+              {clicked === false ? (
+                <AddImage setSelectedImage={setSelectedImage} />
+              ) : (
+                <img src={selectedImage} width={15} />
+              )}
+            </div>
             <Row>
               <Col>
                 <Form.Group>
