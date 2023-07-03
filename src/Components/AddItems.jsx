@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AddImage from "./AddImage";
 
@@ -16,11 +16,9 @@ function AddItems({
   data,
   defaultOptions,
   handleClose,
-  selectedImage,
-  setSelectedImage,
-  clicked,
-  onClicked,
+  error,
 }) {
+  const hideShow = () => {};
   const schema = yup.object().shape({
     firstName: yup
       .string()
@@ -56,18 +54,23 @@ function AddItems({
       })
       .nullable()
       .required("status is required (from outter null check)"),
+    profile: yup.string(),
   });
 
   const {
     register,
     control,
     handleSubmit,
+    getValues,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+
+  console.log("🚀 ~ file: AddItems.jsx:76 ~ watch:", watch());
   useEffect(() => {
     if (inputList.mode === "edit" && data) {
       setValue("firstName", data.firstName);
@@ -75,9 +78,9 @@ function AddItems({
       setValue("email", data.email);
       setValue("userName", data.userName);
       setValue("status", data.status);
+      setValue("profile", data?.profile);
     }
   }, [data, inputList.mode, setValue]);
-
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -86,12 +89,10 @@ function AddItems({
         </Modal.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body className="form-modal">
-            <div style={{ marginBottom: "15px" }}>
-              {clicked === false ? (
-                <AddImage setSelectedImage={setSelectedImage} />
-              ) : (
-                <img src={selectedImage} width={15} />
-              )}
+            <div style={{ marginBottom: "15px" }} onClick={hideShow}>
+              <AddImage profile={getValues("profile")} setValue={setValue} />
+
+              <span>{error}</span>
             </div>
             <Row>
               <Col>
@@ -174,11 +175,6 @@ AddItems.propTypes = {
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 export default AddItems;

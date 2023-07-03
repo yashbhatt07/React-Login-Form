@@ -4,7 +4,6 @@ import Nav from "./Nav";
 import DummyProfile from "../Components/DummyProfile.webp";
 import { Modal, Form, Table, Button } from "react-bootstrap";
 import AddItems from "../Components/AddItems";
-// import AddImage from "./AddImage";
 import Pagination from "./Pagination";
 import Blue from "../Components/blue.png";
 import Green from "../Components/green.png";
@@ -31,164 +30,162 @@ export default function Users() {
         label: "In-Active",
       },
     },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
-    // {
-    //   firstName: "qwqwqwqw",
-    //   lastName: "wdwdwdw",
-    //   email: "d@gamil.com",
-    //   userName: "yyyyty",
-    //   status: {
-    //     value: "Active",
-    //     label: "Active",
-    //   },
-    // },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
+    {
+      firstName: "qwqwqwqw",
+      lastName: "wdwdwdw",
+      email: "d@gamil.com",
+      userName: "yyyyty",
+      status: {
+        value: "Active",
+        label: "Active",
+      },
+    },
   ]);
+  console.log("🚀 ~ file: Users.jsx:174 ~ Users ~ list:", list);
   const [show, setShow] = useState(false);
   const [showMessaga, setShowMessage] = useState(false);
-  // const [showDropMessage, setShowDropMessage] = useState(false);
   const [inputList, setInputList] = useState({ mode: "add", index: null });
-  console.log(list);
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const records = list.slice(startIndex, endIndex);
   const nPage = Math.ceil(list.length / itemsPerPage);
-  console.log("🚀 ~ file: Users.jsx:184 ~ Users ~ nPage:", nPage);
   const [sortOrderF, setSortOrderF] = useState("asc");
   const [sortOrderL, setSortOrderL] = useState("asc");
-  const [selectedImage, setSelectedImage] = useState(null);
   const [clicked, setClicked] = useState(false);
-  const [file, setFile] = useState();
+
   const defaultOptions = [
     { value: "Active", label: "Active" },
     { value: "In-Active", label: "In-Active" },
@@ -217,9 +214,13 @@ export default function Users() {
 
   const onStatus = (index) => {
     const updatedList = [...list];
-    const currentStatus = updatedList[index].status.value;
+    const currentStatus = updatedList[startIndex + index].status.value;
     const newStatus = currentStatus === "Active" ? "In-Active" : "Active";
-    updatedList[index].status = { value: newStatus, label: newStatus };
+    updatedList[startIndex + index].status = {
+      value: newStatus,
+      label: newStatus,
+    };
+
     setList(updatedList);
   };
 
@@ -249,6 +250,7 @@ export default function Users() {
     setShowMessage(true);
   };
   const editHandler = (data, index) => {
+    console.log("this is image in edit", data.image);
     setInputList({
       mode: "edit",
       index,
@@ -283,7 +285,6 @@ export default function Users() {
     setClicked(true);
     handleClose();
   };
-
   return (
     <>
       <Nav />
@@ -329,13 +330,11 @@ export default function Users() {
                   {records.length > 0}
                   <td>{index + startIndex + 1}</td>
                   <td>
-                    <span>
-                      {clicked ? (
-                        <img src={selectedImage} width={45} />
-                      ) : (
-                        <img src={DummyProfile} width={45} />
-                      )}
-                    </span>
+                    {data.profile ? (
+                      <img src={data.profile} width={45} />
+                    ) : (
+                      <img src={DummyProfile} width={45} />
+                    )}
                   </td>
                   <td>{data.firstName}</td>
                   <td>{data.lastName}</td>
@@ -344,11 +343,12 @@ export default function Users() {
                   <td>
                     <input
                       className={`radio__toggle ${
-                        data.status === "In-Active" ? "inactive" : "active"
+                        data.status.value === "Active" ? "active" : "inactive"
                       }`}
                       id="radio__toggle1"
                       type="checkbox"
                       onClick={() => onStatus(index)}
+                      checked={data.status.value === "Active"}
                     />
                     {data.status.value}
                   </td>
@@ -399,23 +399,6 @@ export default function Users() {
               </th>
             </tr>
           )}
-          {/* <Modal show={showDropMessage} onHide={closeModal}>
-            <Modal.Header>
-              <Modal.Title>Change Status</Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="form-modal">
-              <Form.Label>Do You Want To Change Status?</Form.Label>
-            </Modal.Body>
-
-            <Modal.Footer>
-              <Button variant="secondary p-3" onClick={closeModal}>
-                Close
-              </Button>
-              <Button variant="primary p-3" onClick={() => onStatus()}>
-                Update
-              </Button>
-            </Modal.Footer>
-          </Modal> */}
         </tbody>
       </Table>
       <Pagination changeCpage={changeCpage} nPage={nPage} />
@@ -427,10 +410,8 @@ export default function Users() {
           onSubmit={onSubmit}
           data={inputList.mode === "edit" ? records[inputList.index] : null}
           defaultOptions={defaultOptions}
-          selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage}
-          setFiles={setFile}
           clicked={clicked}
+          index={inputList.index}
         />
       )}
     </>

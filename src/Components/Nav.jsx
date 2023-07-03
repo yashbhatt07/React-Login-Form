@@ -2,10 +2,10 @@
 import "../Components/Nav.css";
 import Navbar from "react-bootstrap/Navbar";
 import { Container } from "react-bootstrap";
-import MayNav from "react-bootstrap/Nav";
+import Nav from "react-bootstrap/Nav";
 import { Link, useLocation } from "react-router-dom";
 
-export default function Nav() {
+export default function NavBar() {
   const location = useLocation();
 
   const isCurrentPage = (path) => {
@@ -17,9 +17,9 @@ export default function Nav() {
     const linkClass = isActive ? "nav-link active" : "nav-link";
 
     return (
-      <MayNav.Link as={Link} to={path} className={linkClass}>
+      <Nav.Link as={Link} to={path} className={linkClass}>
         {name}
-      </MayNav.Link>
+      </Nav.Link>
     );
   };
 
@@ -32,17 +32,13 @@ export default function Nav() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <MayNav className="me-auto">
-              <MayNav.Link as={Link} to="/dashboard">
-                {renderNavLink("/dashboard", "Dashboard")}
-              </MayNav.Link>
-              <MayNav.Link as={Link} to="/users">
-                {renderNavLink("/users", "Users")}
-              </MayNav.Link>
-              <MayNav.Link as={Link} to="/login" className="text-sm-left l-g ">
+            <Nav className="me-auto">
+              {renderNavLink("/dashboard", "Dashboard")}
+              {renderNavLink("/users", "Users")}
+              <Nav.Link as={Link} to="/login" className="text-sm-left l-g ">
                 Logout
-              </MayNav.Link>
-            </MayNav>
+              </Nav.Link>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
