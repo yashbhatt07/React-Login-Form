@@ -52,7 +52,6 @@ function AddImage({ profile = "", setValue }) {
           } else {
             resolve({ file, base64String, resolutionError });
           }
-          console.log(resolutionError);
         };
       });
 

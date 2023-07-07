@@ -63,29 +63,35 @@ function AddItems({
     handleSubmit,
     getValues,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
-  console.log("🚀 ~ file: AddItems.jsx:76 ~ watch:", watch());
   useEffect(() => {
     if (inputList.mode === "edit" && data) {
-      setValue("firstName", data.firstName);
-      setValue("lastName", data.lastName);
-      setValue("email", data.email);
-      setValue("userName", data.userName);
-      setValue("status", data.status);
-      setValue("profile", data?.profile);
+      setValue("firstName", data?.firstName);
+      setValue("lastName", data?.lastName);
+      setValue("email", data?.email);
+      setValue("userName", data?.userName);
+      setValue("status", data?.status);
+      setValue("profile", data?.profile || "");
     }
+    console.log(
+      "🚀 ~ file: AddItems.jsx:82 ~ useEffect ~ data?.profile:",
+      data
+    );
   }, [data, inputList.mode, setValue]);
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title>Add Items</Modal.Title>
+          <Modal.Title>
+            {" "}
+            {inputList.mode === "add" ? "Add Items" : "Edit Items"}
+          </Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body className="form-modal">
