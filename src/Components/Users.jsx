@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import _ from "lodash";
+import { useState, useEffect, useMemo } from "react";
+import axios from "axios";
 import Nav from "./Nav";
 import DummyProfile from "../Components/DummyProfile.webp";
-import { Modal, Form, Table, Button } from "react-bootstrap";
+import { Modal, Form, Table, Button, Spinner } from "react-bootstrap";
 import AddItems from "../Components/AddItems";
-// import Filter from "./Filter";
+import ToastNotification from "./ToastNotification";
+import "react-toastify/dist/ReactToastify.css";
+
 import Searching from "./Searching";
-// import reactTable from "./reactTable";
-// import Pagination from "./Pagination";
 import {
   createColumnHelper,
   useReactTable,
@@ -18,14 +18,12 @@ import {
   getFacetedMinMaxValues,
   getPaginationRowModel,
   getSortedRowModel,
-  // SortingState,
   flexRender,
 } from "@tanstack/react-table";
-import { rankItem, compareItems } from "@tanstack/match-sorter-utils";
-import Blue from "../Components/blue.png";
-import Green from "../Components/green.png";
+import { rankItem } from "@tanstack/match-sorter-utils";
 import "../Components/Users.css";
 import { defaultData } from "../constants";
+import { showToast } from "./ToastNotification";
 function fuzzyFilter(row, columnId, value, addMeta) {
   const itemRank = rankItem(row.getValue(columnId), value);
   addMeta({
@@ -33,49 +31,37 @@ function fuzzyFilter(row, columnId, value, addMeta) {
   });
   return itemRank.passed;
 }
-
-// function fuzzySort(rowA, rowB, columnId) {
-//   let dir = 0;
-//   if (rowA.columnFiltersMeta[columnId]) {
-//     dir = compareItems(
-//       rowA.columnFiltersMeta[columnId]?.itemRank,
-//       rowB.columnFiltersMeta[columnId]?.itemRank
-//     );
-//   }
-//   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
-// }
-// const sortingFnss={
-//   alphanumeric:(rowA,rowB,columnId)=>{
-
-//   }
-// }
-// const sortingFnsWithDisabledColumns = {
-//   ...sortingFnss,
-//   firstName: () => 0, // Disable sorting for "First Name" column
-//   lastName: () => 0, // Disable sorting for "Last Name" column
-// };
 export default function Users() {
   const [columnFilters, setColumnFilters] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [list, setList] = useState(defaultData);
-  console.log("🚀 ~ file: Users.jsx:180 ~ Users ~ list:", list);
 
   const [show, setShow] = useState(false);
   const [showMessaga, setShowMessage] = useState(false);
   const [inputList, setInputList] = useState({ mode: "add", index: null });
 
-  // const [currentPage, setCurrentPage] = useState(0);
-  // console.log("🚀 ~ file: Users.jsx:187 ~ Users ~ currentPage:", currentPage);
-  // const itemsPerPage = 3;
-  // const startIndex = currentPage * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const records = list.slice(startIndex, endIndex);
-  // const nPage = Math.ceil(list.length / itemsPerPage);
-  const [sortOrderF, setSortOrderF] = useState("asc");
-  const [sortOrderL, setSortOrderL] = useState("asc");
-  /** @type import('@tanstack/react-table').ColumnDef<any>*/
+  const [loading, setLoading] = useState(false);
+
   const data = useMemo(() => list, [list]);
   const columnHelper = createColumnHelper();
+
+  useEffect(() => {
+    const getUsers = async () => {
+      setLoading(true);
+      await axios
+        .get("users")
+        .then((resp) => {
+          setList(resp.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          showToast();
+          setList("");
+        });
+      setLoading(false);
+    };
+    getUsers();
+  }, []);
 
   const columns = [
     columnHelper.accessor((row) => row.profile, {
@@ -161,7 +147,6 @@ export default function Users() {
   ];
   const [sorting, setSorting] = useState([]);
 
-  console.log(columns);
   const reactTable = useReactTable({
     data,
     columns,
@@ -200,39 +185,6 @@ export default function Users() {
     { value: "Active", label: "Active" },
     { value: "In-Active", label: "In-Active" },
   ];
-  const SortingFName = useCallback(() => {
-    if (sortOrderF === "asc") {
-      list.sort((a, b) => a.firstName.localeCompare(b.firstName));
-      setSortOrderF("desc");
-    } else {
-      list.sort((a, b) => b.firstName.localeCompare(a.firstName));
-      setSortOrderF("asc");
-    }
-    setList([...list]);
-  }, [list, sortOrderF]);
-
-  const SortingLName = useCallback(() => {
-    if (sortOrderL === "asc") {
-      list.sort((a, b) => a.lastName.localeCompare(b.lastName));
-      setSortOrderL("desc");
-    } else {
-      list.sort((a, b) => b.lastName.localeCompare(a.lastName));
-      setSortOrderL("asc");
-    }
-    setList([...list]);
-  }, [list, sortOrderL]);
-
-  const onStatus = (index) => {
-    const updatedList = [...list];
-    const currentStatus = updatedList[index].status.value;
-    const newStatus = currentStatus === "Active" ? "In-Active" : "Active";
-    updatedList[index].status = {
-      value: newStatus,
-      label: newStatus,
-    };
-
-    setList(updatedList);
-  };
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
@@ -256,50 +208,63 @@ export default function Users() {
   const messageClose = () => {
     setShowMessage(false);
   };
-  const messageDelete = (index) => {
-    setInputList({ mode: "delete", index });
+  const messageDelete = (row) => {
+    setInputList({ mode: "delete", index: row.row.index });
 
     setShowMessage(true);
   };
   const editHandler = (row) => {
-    console.log("🚀 ~ file: Users.jsx:259 ~ editHandler ~ row:", row);
     setShow(true);
 
     setInputList({
       mode: "edit",
       index: row.row.index,
     });
-    console.log("now function is called", inputList);
-    console.log(
-      "🚀 ~ file: Users.jsx:265 ~ editHandler ~ index:",
-      inputList.index
-    );
   };
+  const deleteHandler = async (index) => {
+    setShowMessage(false);
 
-  const deleteHandler = (index) => {
-    setList((oldValue) => {
-      const updatedList = [...oldValue];
-      updatedList.splice(index, 1);
-
-      return updatedList;
-    });
-    messageClose();
-  };
-
-  const onSubmit = (data, row) => {
-    console.log("🚀 ~ file: Users.jsx:284 ~ onSubmit ~ row:", row);
-    console.log("🚀 ~ file: Users.jsx:284 ~ onSubmit ~ data:", data);
-    const newList = _.cloneDeep(list);
-    if (inputList.mode === "add") {
-      newList.push(data);
-    } else {
-      newList[inputList.index] = data;
-      console.log("🚀this is the new list console log", newList);
+    try {
+      await axios.delete(`users/${list[inputList.index].id}`);
+      setList((prevList) => {
+        const updatedList = [...prevList];
+        updatedList.splice(index, 1);
+        return updatedList;
+      });
+    } catch (error) {
+      console.log(error);
+      showToast();
     }
+  };
 
-    setList(() => {
-      return newList;
-    });
+  const onSubmit = async (data) => {
+    if (inputList.mode === "add") {
+      await axios
+        .post("users", data)
+        .then((res) => {
+          const newItem = res.data;
+          setList((prevList) => [...prevList, newItem]);
+        })
+        .catch((err) => {
+          console.log(err);
+          showToast();
+        });
+    } else {
+      await axios
+        .put(`users/${list[inputList.index].id}`, data)
+        .then((res) => {
+          const updatedList = res.data;
+          setList((prevList) => {
+            const newList = [...prevList];
+            newList[inputList.index] = updatedList;
+            return newList;
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          showToast();
+        });
+    }
 
     handleClose();
   };
@@ -307,6 +272,7 @@ export default function Users() {
   return (
     <>
       <Nav />
+      <ToastNotification />
       <div>
         <Searching
           value={globalFilter ?? ""}
@@ -359,8 +325,15 @@ export default function Users() {
             </tr>
           ))}
         </thead>
+
         <tbody>
-          {list.length > 0 ? (
+          {loading ? (
+            <tr>
+              <td colSpan={7} className="text-center">
+                <Spinner />
+              </td>
+            </tr>
+          ) : list.length > 0 ? (
             reactTable.getRowModel().rows?.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells()?.map((cell) => (
@@ -371,11 +344,17 @@ export default function Users() {
               </tr>
             ))
           ) : (
-            <span style={{ textAlign: "center" }}>No Data Found</span>
+            <tr>
+              <td colSpan={7} className="text-center">
+                <span style={{ textAlign: "center" }}>No Data Found</span>
+              </td>
+            </tr>
           )}
         </tbody>
-        {/* <tfoot></tfoot> */}
       </Table>
+      {/* <div className="text-center" id="spinner">
+        <img src={Loader} alt="loader" />
+      </div> */}
       <div className="h-2" />
       <div className="flex items-center gap-2">
         <button
@@ -441,11 +420,6 @@ export default function Users() {
       </div>
       <div>{reactTable.getRowModel().rows.length} Rows</div>
       <pre>{JSON.stringify(reactTable.getState().pagination, null, 2)}</pre>
-      {/* <Pagination
-        changeCpage={changeCpage}
-        nPage={nPage}
-        currentPage={currentPage}
-      /> */}
       {show && (
         <AddItems
           inputList={inputList}

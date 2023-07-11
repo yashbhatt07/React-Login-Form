@@ -78,10 +78,6 @@ function AddItems({
       setValue("status", data?.status);
       setValue("profile", data?.profile || "");
     }
-    console.log(
-      "🚀 ~ file: AddItems.jsx:82 ~ useEffect ~ data?.profile:",
-      data
-    );
   }, [data, inputList.mode, setValue]);
 
   return (
@@ -97,7 +93,6 @@ function AddItems({
           <Modal.Body className="form-modal">
             <div style={{ marginBottom: "15px" }} onClick={hideShow}>
               <AddImage profile={getValues("profile")} setValue={setValue} />
-
               <span>{error}</span>
             </div>
             <Row>
