@@ -17,7 +17,7 @@ function Dashboard() {
       <div>
         <h6 className="h-2">Totel Number Of Users</h6>
         <span className="n-items" onClick={goToUsers}>
-          {list.length}
+          {list?.length}
         </span>
       </div>
     </div>

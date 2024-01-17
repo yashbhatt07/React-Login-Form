@@ -77,7 +77,7 @@ export default function Login() {
 
     if (email === validEmail && password === validPassword) {
       localStorage.setItem("login", true);
-      navigate("/dashboard");
+      navigate("/users");
     } else {
       // setLoginForm({ ...loginForm, message: { error: "Wrong Credentials" } });
       setError("Invalid Credential");

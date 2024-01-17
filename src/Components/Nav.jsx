@@ -27,7 +27,7 @@ export default function NavBar() {
     <>
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand as={Link} to="/users">
             Admin Panel
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
